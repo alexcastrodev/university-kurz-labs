@@ -12,8 +12,8 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-security-user-management</artifactId>
-    <name>Spring Security User Management</name>
+    <artifactId>spring-security-user-management-solution</artifactId>
+    <name>Spring Security User Management Solution</name>
 
     <dependencies>
         <dependency>
