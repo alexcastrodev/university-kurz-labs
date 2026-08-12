@@ -1,3 +1,4 @@
+import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -7,11 +8,13 @@ public class FieldFlags {
         // TODO-03: Return true if the field's access_flags include ACC_PUBLIC.
         // Field.getModifiers() returns the same bits the class file stores;
         // Modifier decodes them.
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Field field = type.getDeclaredField(fieldName);
+        return field.accessFlags().contains(AccessFlag.PUBLIC);
     }
 
     public static boolean isStatic(Class<?> type, String fieldName) throws NoSuchFieldException {
         // TODO-04: Return true if the field's access_flags include ACC_STATIC.
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Field field = type.getDeclaredField(fieldName);
+        return field.accessFlags().contains(AccessFlag.STATIC);
     }
 }
