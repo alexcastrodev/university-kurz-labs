@@ -1,4 +1,3 @@
-import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -9,12 +8,12 @@ public class FieldFlags {
         // Field.getModifiers() returns the same bits the class file stores;
         // Modifier decodes them.
         Field field = type.getDeclaredField(fieldName);
-        return field.accessFlags().contains(AccessFlag.PUBLIC);
+        return Modifier.isPublic(field.getModifiers());
     }
 
     public static boolean isStatic(Class<?> type, String fieldName) throws NoSuchFieldException {
         // TODO-04: Return true if the field's access_flags include ACC_STATIC.
         Field field = type.getDeclaredField(fieldName);
-        return field.accessFlags().contains(AccessFlag.STATIC);
+        return Modifier.isStatic(field.getModifiers());
     }
 }

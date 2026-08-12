@@ -16,7 +16,8 @@ public class ClassFileReader {
         // then read and return the 2-byte major_version. Both version fields
         // are unsigned — see DataInputStream.readUnsignedShort().
         DataInputStream data = new DataInputStream(classFile);
-        data.skipBytes(6);
+        data.readInt();
+        data.readUnsignedShort();
 
         return data.readUnsignedShort();
     }
@@ -26,7 +27,9 @@ public class ClassFileReader {
         // major_version (8 bytes total), then read and return the 2-byte
         // constant_pool_count.
         DataInputStream data = new DataInputStream(classFile);
-        data.skipBytes(8);
+        data.readInt();
+        data.readUnsignedShort();
+        data.readUnsignedShort();
 
         return data.readUnsignedShort();
     }
