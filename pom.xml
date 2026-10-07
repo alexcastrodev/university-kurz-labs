@@ -58,6 +58,14 @@
         <module>spring-concepts/spring-kafka-messaging-solution</module>
         <module>spring-concepts/spring-data-rest-repositories</module>
         <module>spring-concepts/spring-data-rest-repositories-solution</module>
+        <module>spring-concepts/spring-application-events</module>
+        <module>spring-concepts/spring-application-events-solution</module>
+        <module>spring-concepts/spring-modulith-application-modules-and-verification</module>
+        <module>spring-concepts/spring-modulith-application-modules-and-verification-solution</module>
+        <module>spring-concepts/spring-modulith-events-and-publication-registry</module>
+        <module>spring-concepts/spring-modulith-events-and-publication-registry-solution</module>
+        <module>spring-concepts/spring-modulith-testing-and-documentation</module>
+        <module>spring-concepts/spring-modulith-testing-and-documentation-solution</module>
 
         <module>java-concepts/iterator-vs-iterable</module>
         <module>java-concepts/iterator-vs-iterable-solution</module>
@@ -189,6 +197,106 @@
         <module>testing-concepts/testing-jpa-hibernate-solution</module>
         <module>testing-concepts/database-testing-prerequisites-and-transactions</module>
         <module>testing-concepts/database-testing-prerequisites-and-transactions-solution</module>
+        <module>kubernetes-concepts/projected-volumes-combining-multiple-secrets</module>
+        <module>kubernetes-concepts/projected-volumes-combining-multiple-secrets-solution</module>
+        <module>kubernetes-concepts/volumes-and-mount-conflicts</module>
+        <module>kubernetes-concepts/volumes-and-mount-conflicts-solution</module>
+        <module>kubernetes-concepts/configmaps-and-environment-variables</module>
+        <module>kubernetes-concepts/configmaps-and-environment-variables-solution</module>
+        <module>kubernetes-concepts/secrets-as-env-vars-vs-mounted-files</module>
+        <module>kubernetes-concepts/secrets-as-env-vars-vs-mounted-files-solution</module>
+        <module>kubernetes-concepts/startup-liveness-readiness-probes</module>
+        <module>kubernetes-concepts/startup-liveness-readiness-probes-solution</module>
+        <module>kubernetes-concepts/resource-requests-limits-and-qos</module>
+        <module>kubernetes-concepts/resource-requests-limits-and-qos-solution</module>
+        <module>kubernetes-concepts/deployment-strategies-rollingupdate-vs-recreate</module>
+        <module>kubernetes-concepts/deployment-strategies-rollingupdate-vs-recreate-solution</module>
+        <module>kubernetes-concepts/jobs-and-restart-policy</module>
+        <module>kubernetes-concepts/jobs-and-restart-policy-solution</module>
+        <module>kubernetes-concepts/kustomize-generators-and-hash-suffix</module>
+        <module>kubernetes-concepts/kustomize-generators-and-hash-suffix-solution</module>
+        <module>kubernetes-concepts/kustomize-patches</module>
+        <module>kubernetes-concepts/kustomize-patches-solution</module>
+        <module>kubernetes-concepts/persistent-volumes-and-storageclasses</module>
+        <module>kubernetes-concepts/persistent-volumes-and-storageclasses-solution</module>
+        <module>kubernetes-concepts/volume-permissions-and-fsgroup</module>
+        <module>kubernetes-concepts/volume-permissions-and-fsgroup-solution</module>
+        <module>kubernetes-concepts/logical-database-backups-with-kubectl-exec-and-cronjobs</module>
+        <module>kubernetes-concepts/logical-database-backups-with-kubectl-exec-and-cronjobs-solution</module>
+        <module>kubernetes-concepts/rbac-least-privilege</module>
+        <module>kubernetes-concepts/rbac-least-privilege-solution</module>
+        <module>kubernetes-concepts/serviceaccount-tokens-and-automount</module>
+        <module>kubernetes-concepts/serviceaccount-tokens-and-automount-solution</module>
+        <module>kubernetes-concepts/network-policies-default-deny</module>
+        <module>kubernetes-concepts/network-policies-default-deny-solution</module>
+        <module>kubernetes-concepts/pod-security-admission</module>
+        <module>kubernetes-concepts/pod-security-admission-solution</module>
+        <module>kubernetes-concepts/securitycontext-hardening</module>
+        <module>kubernetes-concepts/securitycontext-hardening-solution</module>
+        <module>kubernetes-concepts/service-dns-and-cross-namespace-access</module>
+        <module>kubernetes-concepts/service-dns-and-cross-namespace-access-solution</module>
+        <module>kubernetes-concepts/services-clusterip-and-nodeport</module>
+        <module>kubernetes-concepts/services-clusterip-and-nodeport-solution</module>
+        <module>kubernetes-concepts/deleting-pods-scaling-and-stuck-namespaces</module>
+        <module>kubernetes-concepts/deleting-pods-scaling-and-stuck-namespaces-solution</module>
+        <module>kubernetes-concepts/rollouts-restart-history-and-rollback</module>
+        <module>kubernetes-concepts/rollouts-restart-history-and-rollback-solution</module>
+        <module>kubernetes-concepts/kubernetes-events</module>
+        <module>kubernetes-concepts/kubernetes-events-solution</module>
+        <module>kubernetes-concepts/debugging-crashloopbackoff</module>
+        <module>kubernetes-concepts/debugging-crashloopbackoff-solution</module>
+        <module>kubernetes-concepts/image-pull-errors</module>
+        <module>kubernetes-concepts/image-pull-errors-solution</module>
+        <module>kubernetes-concepts/image-pull-secrets-and-pull-policy</module>
+        <module>kubernetes-concepts/image-pull-secrets-and-pull-policy-solution</module>
+        <module>kubernetes-concepts/kubectl-exec-and-port-forward</module>
+        <module>kubernetes-concepts/kubectl-exec-and-port-forward-solution</module>
+        <module>kubernetes-concepts/pod-lifecycle-and-status</module>
+        <module>kubernetes-concepts/pod-lifecycle-and-status-solution</module>
+        <module>kubernetes-concepts/multi-namespace-layout-and-apply-order</module>
+        <module>kubernetes-concepts/multi-namespace-layout-and-apply-order-solution</module>
+        <module>kubernetes-concepts/idempotent-cluster-bootstrap</module>
+        <module>kubernetes-concepts/idempotent-cluster-bootstrap-solution</module>
+        <module>kubernetes-concepts/metrics-server-and-kubectl-top</module>
+        <module>kubernetes-concepts/metrics-server-and-kubectl-top-solution</module>
+        <module>kubernetes-concepts/managed-runtime-memory-in-containers</module>
+        <module>kubernetes-concepts/managed-runtime-memory-in-containers-solution</module>
+        <module>kubernetes-concepts/ingress-controllers-and-gateway-api</module>
+        <module>kubernetes-concepts/ingress-controllers-and-gateway-api-solution</module>
+        <module>kubernetes-concepts/cert-manager-issuers-and-private-ca</module>
+        <module>kubernetes-concepts/cert-manager-issuers-and-private-ca-solution</module>
+        <module>kubernetes-concepts/prometheus-grafana-and-servicemonitors</module>
+        <module>kubernetes-concepts/prometheus-grafana-and-servicemonitors-solution</module>
+        <module>kubernetes-concepts/alertmanager-basic-alerts</module>
+        <module>kubernetes-concepts/alertmanager-basic-alerts-solution</module>
+        <module>kubernetes-concepts/centralized-logs-loki-alloy</module>
+        <module>kubernetes-concepts/centralized-logs-loki-alloy-solution</module>
+        <module>kubernetes-concepts/kubeconfig-contexts-and-admin-access</module>
+        <module>kubernetes-concepts/kubeconfig-contexts-and-admin-access-solution</module>
+        <module>kubernetes-concepts/kustomize-bases-overlays-and-components</module>
+        <module>kubernetes-concepts/kustomize-bases-overlays-and-components-solution</module>
+        <module>kubernetes-concepts/kustomize-images-one-image-many-roles</module>
+        <module>kubernetes-concepts/kustomize-images-one-image-many-roles-solution</module>
+        <module>kubernetes-concepts/kubernetes-secrets-fundamentals</module>
+        <module>kubernetes-concepts/kubernetes-secrets-fundamentals-solution</module>
+        <module>kubernetes-concepts/deploying-from-ci-pipeline</module>
+        <module>kubernetes-concepts/deploying-from-ci-pipeline-solution</module>
+        <module>kubernetes-concepts/kubernetes-core-objects</module>
+        <module>kubernetes-concepts/kubernetes-core-objects-solution</module>
+        <module>kubernetes-concepts/kubectl-essentials</module>
+        <module>kubernetes-concepts/kubectl-essentials-solution</module>
+        <module>kubernetes-concepts/node-capacity-allocatable-and-memory-budget</module>
+        <module>kubernetes-concepts/node-capacity-allocatable-and-memory-budget-solution</module>
+        <module>kubernetes-concepts/lets-encrypt-http01-vs-dns01</module>
+        <module>kubernetes-concepts/lets-encrypt-http01-vs-dns01-solution</module>
+        <module>kubernetes-concepts/volume-backups-velero-and-restore-drills</module>
+        <module>kubernetes-concepts/volume-backups-velero-and-restore-drills-solution</module>
+        <module>kubernetes-concepts/microk8s-installation-and-diagnostics</module>
+        <module>kubernetes-concepts/microk8s-installation-and-diagnostics-solution</module>
+        <module>kubernetes-concepts/microk8s-addons-dns-and-hostpath-storage</module>
+        <module>kubernetes-concepts/microk8s-addons-dns-and-hostpath-storage-solution</module>
+        <module>kubernetes-concepts/microk8s-containerd-and-private-registry-ca</module>
+        <module>kubernetes-concepts/microk8s-containerd-and-private-registry-ca-solution</module>
     </modules>
 
     <properties>
