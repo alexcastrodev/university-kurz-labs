@@ -1,0 +1,50 @@
+<EditForm EditContext="ctx" OnValidSubmit="HandleValid" OnInvalidSubmit="HandleInvalid">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="model.Name" />
+    <ValidationMessage For="() => model.Name" />
+
+    <InputNumber id="age" @bind-Value="model.Age" />
+    <ValidationMessage For="() => model.Age" />
+
+    <InputText id="email" @bind-Value="model.Email" />
+    <ValidationMessage For="() => model.Email" />
+
+    <InputSelect id="plan" @bind-Value="model.Plan">
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+    </InputSelect>
+
+    <InputCheckbox id="terms" @bind-Value="model.Terms" />
+    <ValidationMessage For="() => model.Terms" />
+
+    @if (ctx.IsModified())
+    {
+        <p class="dirty">Unsaved changes</p>
+    }
+
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    private readonly Signup model = new();
+    private EditContext ctx = default!;
+
+    [Parameter] public EventCallback<Signup> OnSaved { get; set; }
+    [Parameter] public EventCallback OnRejected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ctx = new EditContext(model);
+        ctx.SetFieldCssClassProvider(new LabFieldCssClassProvider());
+    }
+
+    private async Task HandleValid()
+    {
+        await OnSaved.InvokeAsync(model);
+        ctx.MarkAsUnmodified();
+    }
+
+    private Task HandleInvalid() => OnRejected.InvokeAsync();
+}

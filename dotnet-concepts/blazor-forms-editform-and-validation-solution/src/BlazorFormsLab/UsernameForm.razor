@@ -1,0 +1,39 @@
+<EditForm EditContext="ctx" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <InputText id="username" @bind-Value="model.UserName" />
+    <ValidationMessage For="() => model.UserName" />
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    private readonly UsernameModel model = new();
+    private EditContext ctx = default!;
+    private ValidationMessageStore store = default!;
+
+    [Parameter] public Func<string, bool> IsTaken { get; set; } = _ => false;
+    [Parameter] public EventCallback<string> OnSaved { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ctx = new EditContext(model);
+        store = new ValidationMessageStore(ctx);
+        // A store keeps its messages until you clear them: clear the edited field.
+        ctx.OnFieldChanged += (_, e) =>
+        {
+            store.Clear(e.FieldIdentifier);
+            ctx.NotifyValidationStateChanged();
+        };
+    }
+
+    private async Task Save()
+    {
+        var name = model.UserName!;
+        if (IsTaken(name))
+        {
+            store.Add(ctx.Field(nameof(UsernameModel.UserName)), $"{name} is already taken.");
+            ctx.NotifyValidationStateChanged();
+            return;
+        }
+        await OnSaved.InvokeAsync(name);
+    }
+}
