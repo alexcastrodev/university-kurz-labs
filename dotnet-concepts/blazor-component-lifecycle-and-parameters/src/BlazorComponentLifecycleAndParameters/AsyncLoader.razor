@@ -1,0 +1,17 @@
+@inject IDataSource Source
+
+@if (data is null)
+{
+    <p id="state">Loading...</p>
+}
+else
+{
+    <p id="state">Loaded: @data</p>
+}
+
+@code {
+    private string? data;
+
+    // TODO-01: Override OnInitializedAsync, await Source.LoadAsync() and keep the result in `data`.
+    // The component renders "Loading..." at the first await and again when the task completes.
+}

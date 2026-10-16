@@ -1,0 +1,42 @@
+@inject CallLog Log
+
+<p>Value: @Value</p>
+
+@code {
+    [Parameter] public int Value { get; set; }
+
+    // TODO-00: Log every hook, in the order the framework runs it.
+    // Entries: "SetParametersAsync", "OnInitialized", "OnInitializedAsync",
+    // "OnParametersSet", "OnParametersSetAsync", "OnAfterRender(first=True)" and
+    // "OnAfterRenderAsync(first=True)" (use the real firstRender value).
+    // SetParametersAsync must still call the base implementation.
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Log.Add("SetParametersAsync");
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized() => Log.Add("OnInitialized");
+
+    protected override Task OnInitializedAsync()
+    {
+        Log.Add("OnInitializedAsync");
+        return Task.CompletedTask;
+    }
+
+    protected override void OnParametersSet() => Log.Add("OnParametersSet");
+
+    protected override Task OnParametersSetAsync()
+    {
+        Log.Add("OnParametersSetAsync");
+        return Task.CompletedTask;
+    }
+
+    protected override void OnAfterRender(bool firstRender) => Log.Add($"OnAfterRender(first={firstRender})");
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        Log.Add($"OnAfterRenderAsync(first={firstRender})");
+        return Task.CompletedTask;
+    }
+}
