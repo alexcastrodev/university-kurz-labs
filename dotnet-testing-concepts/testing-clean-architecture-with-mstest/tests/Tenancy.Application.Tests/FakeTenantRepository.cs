@@ -7,12 +7,21 @@ namespace Tenancy.Application.Tests;
 // methods on top of that list. Remember that Task.FromResult and Task.CompletedTask exist.
 internal sealed class FakeTenantRepository : ITenantRepository
 {
-    public Task<bool> ExistsAsync(string subdomain, CancellationToken ct) =>
-        throw new NotImplementedException("TODO-01");
+    public List<Tenant> Stored { get; } = [];
 
-    public Task<Tenant?> FindBySubdomainAsync(string subdomain, CancellationToken ct) =>
-        throw new NotImplementedException("TODO-01");
+    public Task<bool> ExistsAsync(string subdomain, CancellationToken ct) 
+    {
+        return Task.FromResult(Stored.Any(x => x.Subdomain.Equals(subdomain)));            
+    }
 
-    public Task AddAsync(Tenant tenant, CancellationToken ct) =>
-        throw new NotImplementedException("TODO-01");
+    public Task<Tenant?> FindBySubdomainAsync(string subdomain, CancellationToken ct)
+    {
+        return Task.FromResult(Stored.FirstOrDefault(x => x.Subdomain.Equals(subdomain)));            
+    }
+
+    public Task AddAsync(Tenant tenant, CancellationToken ct)
+    {
+        Stored.Add(tenant);
+        return Task.CompletedTask;
+    }
 }
