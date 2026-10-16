@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SpanLab/SpanLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SpanLab.Tests/SpanLab.Tests.csproj" />
+  </Folder>
+</Solution>
