@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EfCoreAdoNetDapperAndNosql/EfCoreAdoNetDapperAndNosql.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EfCoreAdoNetDapperAndNosql.Tests/EfCoreAdoNetDapperAndNosql.Tests.csproj" />
+  </Folder>
+</Solution>
