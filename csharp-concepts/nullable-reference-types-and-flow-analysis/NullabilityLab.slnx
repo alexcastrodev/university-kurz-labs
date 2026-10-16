@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NullabilityLab/NullabilityLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NullabilityLab.Tests/NullabilityLab.Tests.csproj" />
+  </Folder>
+</Solution>
