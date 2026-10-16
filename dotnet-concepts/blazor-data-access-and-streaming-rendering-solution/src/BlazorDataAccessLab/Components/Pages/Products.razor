@@ -1,0 +1,32 @@
+@page "/products"
+@* TODO-04: stream the placeholder first, then the data. *@
+@attribute [StreamRendering]
+@inject IProductService Service
+@inject ILoadGate Gate
+
+<h1>Products</h1>
+
+@if (items is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var p in items)
+        {
+            <li>@p.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Product>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO-03: wait for the gate, then load the list through the service.
+        await Gate.WaitAsync();
+        items = await Service.ListAsync();
+    }
+}
