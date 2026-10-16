@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EventsLab/EventsLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EventsLab.Tests/EventsLab.Tests.csproj" />
+  </Folder>
+</Solution>
