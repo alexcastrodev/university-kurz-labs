@@ -1,0 +1,15 @@
+@inject CallLog Log
+
+<p>Value: @Value</p>
+
+@code {
+    [Parameter] public int Value { get; set; }
+
+    // TODO-00: Log every hook, in the order the framework runs it.
+    // Override SetParametersAsync (call the base implementation), OnInitialized,
+    // OnInitializedAsync, OnParametersSet, OnParametersSetAsync, OnAfterRender and
+    // OnAfterRenderAsync, and add one entry to Log in each.
+    // Entries: "SetParametersAsync", "OnInitialized", "OnInitializedAsync",
+    // "OnParametersSet", "OnParametersSetAsync", "OnAfterRender(first=True)" and
+    // "OnAfterRenderAsync(first=True)" (use the real firstRender value).
+}

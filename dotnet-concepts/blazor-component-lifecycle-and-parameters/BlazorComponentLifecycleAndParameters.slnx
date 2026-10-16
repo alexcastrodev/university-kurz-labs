@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BlazorComponentLifecycleAndParameters/BlazorComponentLifecycleAndParameters.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BlazorComponentLifecycleAndParameters.Tests/BlazorComponentLifecycleAndParameters.Tests.csproj" />
+  </Folder>
+</Solution>

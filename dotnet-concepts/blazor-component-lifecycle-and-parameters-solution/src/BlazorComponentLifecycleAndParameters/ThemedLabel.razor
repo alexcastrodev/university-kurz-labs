@@ -1,0 +1,6 @@
+<span class="label-@(Theme ?? "light")">Label</span>
+
+@code {
+    // TODO-04: Receive the theme from an ancestor CascadingValue<string>.
+    [CascadingParameter] public string? Theme { get; set; }
+}

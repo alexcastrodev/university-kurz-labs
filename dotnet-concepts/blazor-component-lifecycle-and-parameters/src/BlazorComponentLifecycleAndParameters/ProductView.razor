@@ -1,0 +1,20 @@
+@inject IProductService Products
+
+<p id="name">@name</p>
+
+@code {
+    private string? name;
+    private int loadedId = -1;
+
+    [Parameter] public int ProductId { get; set; }
+
+    // A mutable parameter: the framework re-runs OnParametersSet on every parent render.
+    [Parameter] public List<int> Tags { get; set; } = [];
+
+    // TODO-03: This reloads on every parent render, even when only Tags changed.
+    // Load only when ProductId really changed since the last load (see loadedId).
+    protected override async Task OnParametersSetAsync()
+    {
+        name = await Products.GetNameAsync(ProductId);
+    }
+}

@@ -1,0 +1,125 @@
+namespace SdkStyleLab;
+
+/// <summary>
+/// Each method returns the full text of an MSBuild file. The tests write the text to disk
+/// and ask the .NET CLI what MSBuild evaluated (no restore, no build, no network).
+/// </summary>
+public static class MsBuildFiles
+{
+    // TODO-00: Return a minimal SDK-style class library: <Project Sdk="Microsoft.NET.Sdk"> with
+    //   a PropertyGroup holding TargetFramework net10.0. Nothing else: the SDK adds the rest.
+    public static string ClassLibraryProject() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-01: Same project as TODO-00, plus an ItemGroup that removes everything under the
+    //   "Legacy" folder from the implicit Compile glob (Compile Remove="Legacy/**").
+    public static string ProjectWithExcludedFile() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+          </PropertyGroup>
+          <ItemGroup>
+            <Compile Remove="Legacy/**" />
+          </ItemGroup>
+        </Project>
+        """;
+
+    // TODO-02: Return a Directory.Build.props (root element <Project> without Sdk) that sets, for
+    //   every project below it: TargetFramework net10.0, Nullable enable, LangVersion 14.0 and
+    //   TreatWarningsAsErrors true.
+    public static string DirectoryBuildProps() => """
+        <Project>
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+            <Nullable>enable</Nullable>
+            <LangVersion>14.0</LangVersion>
+            <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-02 (continued): Return a project that sets nothing but the SDK and overrides Nullable
+    //   to "disable" in its own body. The project body runs after Directory.Build.props, so it wins.
+    public static string ProjectOverridingNullable() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <Nullable>disable</Nullable>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-03: Return a Directory.Build.targets that defines the property ProjectKind:
+    //   "library" by default and "app" when OutputType is Exe. The condition must look at a value
+    //   the project chose, which only works because .targets is imported AFTER the project body.
+    public static string DirectoryBuildTargets() => """
+        <Project>
+          <PropertyGroup>
+            <ProjectKind>library</ProjectKind>
+          </PropertyGroup>
+          <PropertyGroup Condition="'$(OutputType)' == 'Exe'">
+            <ProjectKind>app</ProjectKind>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-04: Return the Directory.Build.props that lives in a nested "tests" folder. It must
+    //   first import the parent file with
+    //   $([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))
+    //   and then set IsTestProject to true. Without the import the root file is hidden.
+    public static string NestedDirectoryBuildProps() => """
+        <Project>
+          <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+          <PropertyGroup>
+            <IsTestProject>true</IsTestProject>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-05: Return a project (SDK, net10.0) with a custom target named WriteStamp. It must write
+    //   one line "$(AssemblyName)|$(TargetFramework)" to the file "stamp.txt" inside
+    //   $(MSBuildProjectDirectory), using the WriteLinesToFile task with Overwrite="true".
+    public static string CustomTargetProject() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+          </PropertyGroup>
+          <Target Name="WriteStamp">
+            <WriteLinesToFile File="$(MSBuildProjectDirectory)/stamp.txt"
+                              Lines="$(AssemblyName)|$(TargetFramework)"
+                              Overwrite="true" />
+          </Target>
+        </Project>
+        """;
+
+    // TODO-06 (optional): Return a project (SDK, net10.0) whose PropertyGroup has the condition
+    //   '$(Configuration)' == 'Release' and sets TreatWarningsAsErrors to true.
+    public static string ReleaseStrictProject() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+          </PropertyGroup>
+          <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+            <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+          </PropertyGroup>
+        </Project>
+        """;
+
+    // TODO-07 (optional): Return a project (SDK, net10.0) that turns the implicit Compile glob off
+    //   (EnableDefaultCompileItems false) and includes only "Program.cs" explicitly.
+    public static string ExplicitCompileProject() => """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net10.0</TargetFramework>
+            <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+          </PropertyGroup>
+          <ItemGroup>
+            <Compile Include="Program.cs" />
+          </ItemGroup>
+        </Project>
+        """;
+}

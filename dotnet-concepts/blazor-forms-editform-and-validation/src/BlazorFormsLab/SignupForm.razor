@@ -1,0 +1,48 @@
+@* TODO-01: add OnValidSubmit="HandleValid" and OnInvalidSubmit="HandleInvalid" to the EditForm
+   and add a <DataAnnotationsValidator /> inside it. *@
+<EditForm EditContext="ctx">
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="model.Name" />
+    <ValidationMessage For="() => model.Name" />
+
+    <InputNumber id="age" @bind-Value="model.Age" />
+    <ValidationMessage For="() => model.Age" />
+
+    <InputText id="email" @bind-Value="model.Email" />
+    <ValidationMessage For="() => model.Email" />
+
+    <InputSelect id="plan" @bind-Value="model.Plan">
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+    </InputSelect>
+
+    <InputCheckbox id="terms" @bind-Value="model.Terms" />
+    <ValidationMessage For="() => model.Terms" />
+
+    @* Bonus TODO-05: show <p class="dirty">Unsaved changes</p> while ctx.IsModified() *@
+
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    private readonly Signup model = new();
+    private EditContext ctx = default!;
+
+    [Parameter] public EventCallback<Signup> OnSaved { get; set; }
+    [Parameter] public EventCallback OnRejected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ctx = new EditContext(model);
+        // TODO-04: register LabFieldCssClassProvider with ctx.SetFieldCssClassProvider(...)
+    }
+
+    private async Task HandleValid()
+    {
+        await OnSaved.InvokeAsync(model);
+        // Bonus TODO-05: ctx.MarkAsUnmodified() after a successful save
+    }
+
+    private Task HandleInvalid() => OnRejected.InvokeAsync();
+}

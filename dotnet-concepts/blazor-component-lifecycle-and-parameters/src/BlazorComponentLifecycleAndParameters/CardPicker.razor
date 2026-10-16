@@ -1,0 +1,9 @@
+<SelectableCard Name="Ada" OnSelected="Pick" />
+<SelectableCard Name="Grace" OnSelected="Pick" />
+<p id="picked">Picked: @picked</p>
+
+@code {
+    private string picked = "none";
+
+    private void Pick(string name) => picked = name;
+}

@@ -1,0 +1,25 @@
+<p id="value">Value: @Value</p>
+
+@code {
+    private int renderedValue = -1;
+
+    public int RenderCount { get; private set; }
+
+    public int ParametersSetCount { get; private set; }
+
+    [Parameter] public int Value { get; set; }
+
+    // Not displayed, so a change here should not cost a render.
+    [Parameter] public int Other { get; set; }
+
+    protected override void OnParametersSet() => ParametersSetCount++;
+
+    // TODO-07 (optional): Skip the render unless Value changed. The parameter hooks still run.
+    protected override bool ShouldRender() => Value != renderedValue;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        renderedValue = Value;
+        RenderCount++;
+    }
+}

@@ -1,0 +1,8 @@
+<span class="badge" @attributes="Extra">@Text</span>
+
+@code {
+    [Parameter] public string Text { get; set; } = "";
+
+    // TODO-06 (optional): Capture every attribute that is not a declared parameter and splat it on the span.
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? Extra { get; set; }
+}

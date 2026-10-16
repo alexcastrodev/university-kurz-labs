@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SdkStyleLab/SdkStyleLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SdkStyleLab.Tests/SdkStyleLab.Tests.csproj" />
+  </Folder>
+</Solution>
