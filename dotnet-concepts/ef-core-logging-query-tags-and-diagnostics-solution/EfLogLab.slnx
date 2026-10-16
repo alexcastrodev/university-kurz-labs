@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EfLogLab/EfLogLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EfLogLab.Tests/EfLogLab.Tests.csproj" />
+  </Folder>
+</Solution>
