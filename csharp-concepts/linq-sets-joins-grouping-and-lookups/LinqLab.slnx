@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LinqLab/LinqLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LinqLab.Tests/LinqLab.Tests.csproj" />
+  </Folder>
+</Solution>
