@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ExceptionLab/ExceptionLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ExceptionLab.Tests/ExceptionLab.Tests.csproj" />
+  </Folder>
+</Solution>
