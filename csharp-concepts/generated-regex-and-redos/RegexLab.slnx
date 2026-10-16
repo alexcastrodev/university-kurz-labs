@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RegexLab/RegexLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RegexLab.Tests/RegexLab.Tests.csproj" />
+  </Folder>
+</Solution>
