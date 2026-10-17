@@ -1,0 +1,9 @@
+@* TODO-02: Constrain the route parameter to an int so /orders/42 binds and
+   /orders/abc does not match any route (404). *@
+@page "/orders/{Id}"
+
+<h1>Order @Id</h1>
+
+@code {
+    [Parameter] public int Id { get; set; }
+}

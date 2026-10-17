@@ -1,0 +1,16 @@
+@* TODO-03 *@
+@page "/search"
+
+<h1>Search</h1>
+@if (string.IsNullOrWhiteSpace(Term))
+{
+    <p id="hint">Type a term.</p>
+}
+else
+{
+    <p id="result">Results for: @Term</p>
+}
+
+@code {
+    [SupplyParameterFromQuery] public string? Term { get; set; }
+}
