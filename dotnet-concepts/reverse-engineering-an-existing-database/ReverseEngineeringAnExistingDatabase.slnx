@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ReverseEngineeringAnExistingDatabase/ReverseEngineeringAnExistingDatabase.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ReverseEngineeringAnExistingDatabase.Tests/ReverseEngineeringAnExistingDatabase.Tests.csproj" />
+  </Folder>
+</Solution>
