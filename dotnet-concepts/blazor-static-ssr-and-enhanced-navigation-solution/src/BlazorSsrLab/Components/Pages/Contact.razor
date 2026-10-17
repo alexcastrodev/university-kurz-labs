@@ -1,0 +1,25 @@
+@page "/contact"
+@inject NavigationManager Nav
+
+<h1>Contact</h1>
+
+@* TODO-04 *@
+<EditForm Model="Model" FormName="contact" OnValidSubmit="Submit" Enhance>
+    <DataAnnotationsValidator />
+    <InputText @bind-Value="Model!.Name" />
+    <ValidationMessage For="() => Model!.Name" />
+    <button type="submit">Send</button>
+</EditForm>
+
+@code {
+    // TODO-05
+    [SupplyParameterFromForm] private ContactModel? Model { get; set; }
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit()
+    {
+        // Post/Redirect/Get: NavigateTo last, nothing after it.
+        Nav.NavigateTo($"/thanks?name={Uri.EscapeDataString(Model!.Name)}");
+    }
+}

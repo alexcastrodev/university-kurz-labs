@@ -1,0 +1,26 @@
+@page "/contact"
+@inject NavigationManager Nav
+
+<h1>Contact</h1>
+
+@* TODO-04: Replace this plain form with an EditForm named "contact" (FormName), enhanced
+   (Enhance), with DataAnnotationsValidator, an InputText bound to Model.Name, a
+   ValidationMessage and OnValidSubmit="Submit". The rendered form must have
+   method="post", data-enhance, a hidden _handler=contact field and the antiforgery token. *@
+<form>
+    <input type="text" />
+    <button type="submit">Send</button>
+</form>
+
+@code {
+    // TODO-05: Bind the posted form into this property with [SupplyParameterFromForm].
+    private ContactModel? Model { get; set; }
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit()
+    {
+        // Post/Redirect/Get: NavigateTo last, nothing after it.
+        Nav.NavigateTo($"/thanks?name={Uri.EscapeDataString(Model!.Name)}");
+    }
+}
