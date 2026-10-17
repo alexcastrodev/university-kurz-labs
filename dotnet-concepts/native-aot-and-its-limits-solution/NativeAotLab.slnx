@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NativeAotLab/NativeAotLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NativeAotLab.Tests/NativeAotLab.Tests.csproj" />
+  </Folder>
+</Solution>
