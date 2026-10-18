@@ -1,9 +1,12 @@
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Tenancy.Api.Tenants;
 using Tenancy.Application;
+using Tenancy.Domain;
+using Tenancy.Infrastructure.Persistence;
 
 namespace Tenancy.Api.Tests;
 
@@ -12,8 +15,10 @@ namespace Tenancy.Api.Tests;
 [TestCategory("Integration")]
 public sealed class TenantsApiTests(TestContext testContext)
 {
-    private readonly TestContext _testContext = testContext;
     private WebApplicationFactory<Program> _factory = null!;
+
+    private Task<HttpResponseMessage> CreateTenantAsync(string subdomain) =>
+        ClientFor("localhost").PostAsJsonAsync("/tenants", new { subdomain }, testContext.CancellationToken);
 
     private string _db = null;
     // TODO-04: Start a new API before each test with a [TestInitialize] method, and stop it after each test
@@ -52,13 +57,9 @@ public sealed class TenantsApiTests(TestContext testContext)
     public async Task ShouldCreateATenantWithTheNormalizedSubdomain()
     {
         // 201, and the DTO has the lower-case subdomain and a version 7 id.
-        var request = new
-        {
-            subdomain = "AKatsUki"
-        };
+        var response = await CreateTenantAsync("AKatsUki");
         
         // Act
-        var response = await ClientFor("localhost").PostAsJsonAsync("/tenants", request, cancellationToken: _testContext.CancellationToken);
         var tenant = await response.Content.ReadFromJsonAsync<TenantDto>();
         
         Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
@@ -69,30 +70,18 @@ public sealed class TenantsApiTests(TestContext testContext)
     [TestMethod]
     public async Task ShouldReturn400WhenTheSubdomainIsInvalid()
     {
-        var request = new
-        {
-            subdomain = "-AKatsUki"
-        };
-        
-        // Act
-        var response = await ClientFor("localhost").PostAsJsonAsync("/tenants", request, cancellationToken: _testContext.CancellationToken);
+        var response = await CreateTenantAsync("-AKatsUki");
         Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
     [TestMethod]
     public async Task ShouldReturn409WhenTheSubdomainIsAlreadyTaken()
     {
-        var request = new
-        {
-            subdomain = "AKatsUki"
-        };
-        
-        // Act
-        await ClientFor("localhost").PostAsJsonAsync("/tenants", request, cancellationToken: _testContext.CancellationToken);
-        var response = await ClientFor("localhost").PostAsJsonAsync("/tenants", request, cancellationToken: _testContext.CancellationToken);
+        await CreateTenantAsync("AKatsUki");
+        var sameTenantRequest = await CreateTenantAsync("AKatsUki");
 
         // Assert
-        Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.Conflict, sameTenantRequest.StatusCode);
     }
 
     [TestMethod]
@@ -101,41 +90,24 @@ public sealed class TenantsApiTests(TestContext testContext)
         // Create two tenants, then ask GET /tenants/current through the host of one of them.
         
         // Act
-        await ClientFor("localhost").PostAsJsonAsync("/tenants", new
-        {
-            subdomain = "AKatsUki"
-        }, cancellationToken: _testContext.CancellationToken);
+        await CreateTenantAsync("AKatsUki");
+        await CreateTenantAsync("taka");
 
-        await ClientFor("localhost").PostAsJsonAsync("/tenants", new
-        {
-            subdomain = "taka"
-        }, cancellationToken: _testContext.CancellationToken);
-
-        var request = await ClientFor("taka").GetAsync("tenants/current", cancellationToken: _testContext.CancellationToken);
-        var response = await request.Content.ReadFromJsonAsync<TenantDto>(_testContext.CancellationToken);
+        var request = await ClientFor("taka.localhost").GetAsync("tenants/current", cancellationToken: testContext.CancellationToken);
+        var response = await request.Content.ReadFromJsonAsync<TenantDto>(testContext.CancellationToken);
         
         // Assert
-        Assert.AreEqual("taka", response?.Subdomain);
+        Assert.AreEqual("taka", response!.Subdomain);
     }
 
     [TestMethod]
-    public async Task ShouldReturn404ForCurrentWhenThereIsNoSuchTenant()
+    [DataRow("AKatsUki")]
+    [DataRow("taka")]
+    public async Task ShouldReturn404ForCurrentWhenThereIsNoSuchTenant(string host)
     {
         // Two hosts, same answer: a subdomain that is not a tenant, and no subdomain at all. Use [DataRow].
-        await ClientFor("localhost").PostAsJsonAsync("/tenants", new
-        {
-            subdomain = "AKatsUki"
-        }, cancellationToken: _testContext.CancellationToken);
-
-        await ClientFor("localhost").PostAsJsonAsync("/tenants", new
-        {
-            subdomain = "taka"
-        }, cancellationToken: _testContext.CancellationToken);
-
-        var request = await ClientFor("taka").GetAsync("tenants/current", cancellationToken: _testContext.CancellationToken);
-        
-        // Assert
-        Assert.AreEqual(HttpStatusCode.NotFound, request.StatusCode);
+        var response = await ClientFor(host).GetAsync("tenants/current", cancellationToken: testContext.CancellationToken);
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [TestMethod]
@@ -143,7 +115,13 @@ public sealed class TenantsApiTests(TestContext testContext)
     {
         // Skip the handler: resolve TenancyDbContext from _factory.Services in a scope and add a
         // duplicate Tenant directly. The handler's check is a courtesy; what does the database say?
+        await CreateTenantAsync("acme");
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<TenancyDbContext>();
+
+        db.Tenants.Add(new Tenant("acme"));
         
-        
+        // Assert
+        await Assert.ThrowsExactlyAsync<DbUpdateException>(() => db.SaveChangesAsync(testContext.CancellationToken));
     }
 }
