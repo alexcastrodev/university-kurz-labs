@@ -1,0 +1,26 @@
+<EditForm Model="model" OnValidSubmit="SubmitAsync" FormName="new-task">
+    <DataAnnotationsValidator />
+
+    <label for="title">Title</label>
+    <InputText id="title" class="form-control" @bind-Value="model.Title" />
+    <ValidationMessage For="() => model.Title" />
+
+    <label for="priority">Priority</label>
+    <InputNumber id="priority" class="form-control" @bind-Value="model.Priority" />
+    <ValidationMessage For="() => model.Priority" />
+
+    <button type="submit" class="btn btn-success">Add task</button>
+</EditForm>
+
+@code {
+    private NewTask model = new();
+
+    [Parameter]
+    public EventCallback<NewTask> OnCreate { get; set; }
+
+    private async Task SubmitAsync()
+    {
+        await OnCreate.InvokeAsync(model);
+        model = new NewTask(); // an empty form for the next task
+    }
+}
