@@ -1,0 +1,82 @@
+@inject ITaskStore Store
+@inject IJSRuntime JS
+
+<h2>@Title</h2>
+
+@if (tasks is null)
+{
+    <p>Loading tasks...</p>
+}
+else if (Visible.Count == 0)
+{
+    <p>No tasks yet.</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @foreach (var task in Visible)
+        {
+            <li @key="task.Id" class="@(task.Done ? "task done text-muted" : "task")">
+                <input type="checkbox" checked="@task.Done" aria-label="Done: @task.Title"
+                       @onchange="e => ToggleAsync(task, (bool)e.Value!)" />
+                <span>@task.Title</span>
+                <button class="btn btn-link" aria-label="Delete @task.Title" @onclick="() => DeleteAsync(task)">x</button>
+            </li>
+        }
+    </ul>
+}
+
+<AuthorizeView Roles="lead">
+    <button class="btn btn-warning" @onclick="ClearCompletedAsync">Clear completed</button>
+</AuthorizeView>
+
+<NewTaskForm OnCreate="AddAsync" />
+
+@code {
+    private List<TaskItem>? tasks;
+
+    [Parameter]
+    public string Title { get; set; } = "Tasks";
+
+    [CascadingParameter]
+    public BoardSettings? Settings { get; set; }
+
+    private List<TaskItem> Visible =>
+        (Settings ?? BoardSettings.Default).HideCompleted ? tasks!.Where(t => !t.Done).ToList() : tasks!;
+
+    protected override async Task OnInitializedAsync() => tasks = [.. await Store.GetAllAsync()];
+
+    private async Task ToggleAsync(TaskItem task, bool done)
+    {
+        task.Done = done;
+        await Store.SaveAsync(task);
+    }
+
+    private async Task DeleteAsync(TaskItem task)
+    {
+        if (!await JS.InvokeAsync<bool>("confirm", $"Delete '{task.Title}'?"))
+        {
+            return;
+        }
+
+        await Store.DeleteAsync(task.Id);
+        tasks!.Remove(task);
+    }
+
+    private async Task AddAsync(NewTask input)
+    {
+        var task = new TaskItem(Guid.NewGuid(), input.Title.Trim(), input.Priority);
+        await Store.SaveAsync(task);
+        tasks!.Add(task);
+        await JS.InvokeVoidAsync("taskBoard.announce", $"Added {task.Title}");
+    }
+
+    private async Task ClearCompletedAsync()
+    {
+        foreach (var task in tasks!.Where(t => t.Done).ToList())
+        {
+            await Store.DeleteAsync(task.Id);
+            tasks!.Remove(task);
+        }
+    }
+}
