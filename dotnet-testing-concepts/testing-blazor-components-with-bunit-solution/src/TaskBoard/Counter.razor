@@ -1,0 +1,26 @@
+<p role="status">Clicked @count of @Max</p>
+<button class="btn btn-primary" disabled="@(count >= Max)" @onclick="IncrementAsync">Click</button>
+
+@code {
+    private int count;
+
+    [Parameter]
+    public int Max { get; set; } = 3;
+
+    [Parameter]
+    public EventCallback<int> OnLimitReached { get; set; }
+
+    private async Task IncrementAsync()
+    {
+        if (count >= Max)
+        {
+            return;
+        }
+
+        count++;
+        if (count == Max)
+        {
+            await OnLimitReached.InvokeAsync(count);
+        }
+    }
+}

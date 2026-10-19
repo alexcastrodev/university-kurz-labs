@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BlazorFormsLab/BlazorFormsLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BlazorFormsLab.Tests/BlazorFormsLab.Tests.csproj" />
+  </Folder>
+</Solution>

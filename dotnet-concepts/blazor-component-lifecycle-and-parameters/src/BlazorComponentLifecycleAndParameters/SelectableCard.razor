@@ -1,0 +1,9 @@
+<button>@Name</button>
+
+@code {
+    // TODO-02: Mark Name as required for the caller ([EditorRequired]) and make the
+    // button invoke the EventCallback<string> with the name (@onclick).
+    [Parameter] public string Name { get; set; } = "";
+
+    [Parameter] public EventCallback<string> OnSelected { get; set; }
+}

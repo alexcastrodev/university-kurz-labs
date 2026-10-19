@@ -1,0 +1,20 @@
+@implements IDisposable
+@inject TickSource Source
+
+<p id="ticks">Ticks: @count</p>
+
+@code {
+    private int count;
+
+    protected override void OnInitialized() => Source.Ticked += OnTick;
+
+    // TODO-05: The source may raise on any thread. Move the state change and the
+    // render request onto the renderer's dispatcher, and unsubscribe in Dispose.
+    private void OnTick() => InvokeAsync(() =>
+    {
+        count++;
+        StateHasChanged();
+    });
+
+    public void Dispose() => Source.Ticked -= OnTick;
+}

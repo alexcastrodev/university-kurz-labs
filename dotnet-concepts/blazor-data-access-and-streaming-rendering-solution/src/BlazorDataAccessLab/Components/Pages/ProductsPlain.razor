@@ -1,0 +1,30 @@
+@page "/products-plain"
+@inject IProductService Service
+@inject ILoadGate Gate
+
+@* Same page without [StreamRendering]: the response waits for OnInitializedAsync. *@
+<h1>Products (plain)</h1>
+
+@if (items is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var p in items)
+        {
+            <li>@p.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Product>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Gate.WaitAsync();
+        items = await Service.ListAsync();
+    }
+}

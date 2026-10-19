@@ -1,0 +1,15 @@
+<!-- MSTest.Sdk brings MSTest, the analyzers and the MTP runner, and its Default profile adds the
+     Code Coverage and TRX extensions, so dotnet test accepts coverage and report-trx options. -->
+<Project Sdk="MSTest.Sdk/4.5.1">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Checkout\Checkout.csproj" />
+  </ItemGroup>
+
+</Project>
