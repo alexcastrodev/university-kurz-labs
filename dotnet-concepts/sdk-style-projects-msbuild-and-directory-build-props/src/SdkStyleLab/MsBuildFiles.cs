@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace SdkStyleLab;
 
 /// <summary>
@@ -8,11 +10,26 @@ public static class MsBuildFiles
 {
     // TODO-00: Return a minimal SDK-style class library: <Project Sdk="Microsoft.NET.Sdk"> with
     //   a PropertyGroup holding TargetFramework net10.0. Nothing else: the SDK adds the rest.
-    public static string ClassLibraryProject() => throw new NotImplementedException();
+    public static string ClassLibraryProject() => """
+                                                  <Project Sdk="Microsoft.NET.Sdk">
+                                                       <PropertyGroup>
+                                                           <TargetFramework>net10.0</TargetFramework>
+                                                       </PropertyGroup>
+                                                  </Project>  
+                                                  """;
 
     // TODO-01: Same project as TODO-00, plus an ItemGroup that removes everything under the
     //   "Legacy" folder from the implicit Compile glob (Compile Remove="Legacy/**").
-    public static string ProjectWithExcludedFile() => throw new NotImplementedException();
+    public static string ProjectWithExcludedFile() => """
+                                                       <Project Sdk="Microsoft.NET.Sdk">
+                                                            <PropertyGroup>
+                                                                <TargetFramework>net10.0</TargetFramework>
+                                                            </PropertyGroup>
+                                                            <ItemGroup>
+                                                                <Compile Remove="Legacy/**" />
+                                                            </ItemGroup>
+                                                       </Project>  
+                                                       """;
 
     // TODO-02: Return a Directory.Build.props (root element <Project> without Sdk) that sets, for
     //   every project below it: TargetFramework net10.0, Nullable enable, LangVersion 14.0 and
