@@ -66,7 +66,7 @@ public sealed class PaypalGateway : IPaymentGateway
 }
 
 // TODO-05 (optional): Ask the container for the "stripe" gateway with [FromKeyedServices].
-public sealed class CheckoutService(IPaymentGateway gateway)
+public sealed class CheckoutService([FromKeyedServices("stripe")] IPaymentGateway gateway)
 {
     public string GatewayName => gateway.Name;
 }
