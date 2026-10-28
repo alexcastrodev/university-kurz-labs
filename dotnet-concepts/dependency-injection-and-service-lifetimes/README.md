@@ -43,6 +43,7 @@ dotnet test
 ## Bonus (Optional)
 
 - TODO-05 (optional): Register two `IPaymentGateway` implementations as keyed
-  singletons and make `CheckoutService` ask for the `"stripe"` one.
+  singletons and make `CheckoutService` ask for the `"stripe"` one. The tests are in
+  `OptionalTodoTests.cs`: remove the `Skip` argument from the `[Fact]` attributes to enable them.
 - TODO-06 (optional): Switch `ValidateOnBuild` and `ValidateScopes` off in the test
   helper and run the tests again. Which test still catches the captive dependency?
