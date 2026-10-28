@@ -9,6 +9,10 @@ public static class StartupTasks
     {
         // TODO-04: Create a scope, resolve FakeDb from the scope's provider, call Seed(),
         //   and return the instance. The scope must be disposed when the method ends.
-        throw new NotImplementedException("Not implemented yet.");
+        using var scope = root.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FakeDb>();
+        db.Seed();
+
+        return db;
     }
 }

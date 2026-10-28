@@ -40,9 +40,14 @@ public sealed record CatalogLookup(string Name, Guid DbId);
 // TODO-03: This singleton keeps one FakeDb forever, which is a captive dependency once
 //   FakeDb is scoped. Change it to depend on IServiceScopeFactory and create a scope
 //   inside Lookup(), resolving FakeDb from that scope and disposing the scope afterwards.
-public sealed class CatalogReader(FakeDb db)
+public sealed class CatalogReader(IServiceScopeFactory scopeFactory)
 {
-    public CatalogLookup Lookup(int id) => new(db.FindGameName(id), db.Id);
+    public CatalogLookup Lookup(int id)
+    {
+        using var scope = scopeFactory.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FakeDb>();
+        return new(db.FindGameName(id), db.Id);
+    }
 }
 
 public interface IPaymentGateway
