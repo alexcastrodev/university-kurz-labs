@@ -11,7 +11,7 @@ public class OptionalTodoTests
             .AddGameStoreServices()
             .BuildServiceProvider();
 
-    [Fact(Skip = "TODO-05 (optional): remove Skip once implemented")]
+    [Fact]
     public void ShouldResolveEachGatewayByItsKey()
     {
         using var provider = BuildProvider();
@@ -20,7 +20,7 @@ public class OptionalTodoTests
         Assert.IsType<PaypalGateway>(provider.GetRequiredKeyedService<IPaymentGateway>("paypal"));
     }
 
-    [Fact(Skip = "TODO-05 (optional): remove Skip once implemented")]
+    [Fact]
     public void ShouldShareAKeyedSingletonAcrossScopes()
     {
         using var provider = BuildProvider();
@@ -33,7 +33,7 @@ public class OptionalTodoTests
             scopeB.ServiceProvider.GetRequiredKeyedService<IPaymentGateway>("stripe"));
     }
 
-    [Fact(Skip = "TODO-05 (optional): remove Skip once implemented")]
+    [Fact]
     public void ShouldInjectTheStripeGatewayIntoCheckoutService()
     {
         using var provider = BuildProvider();
